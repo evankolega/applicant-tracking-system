@@ -120,6 +120,15 @@ USE_X_FORWARDED_HOST = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
+# CSRF Protection Settings
+# https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-cookie-httponly
+# Prevents JavaScript from accessing the CSRF cookie, reducing XSS attack surface
+CSRF_COOKIE_HTTPONLY = True
+
+# https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-cookie-samesite
+# Prevents the browser from sending the CSRF cookie with cross-site requests
+CSRF_COOKIE_SAMESITE = "Strict"
+
 # Process analysis financial starting date.
 # It should only contain the month and day using '<month>-<day>' format.
 FINANCIAL_STARTING_MONTH_DAY = "07-01"
