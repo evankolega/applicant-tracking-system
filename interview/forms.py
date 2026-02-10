@@ -2,7 +2,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.template.loader import render_to_string
-from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 from django.utils.translation import gettext as _
 
 from crispy_forms.helper import FormHelper
@@ -62,9 +62,9 @@ class ProcessReuseCandidateForm(ProcessCandidateForm):
 
 class SelectOrCreateSource(SourcesWidget):
     def render(self, *args, **kwargs):
-        output = [super().render(*args, **kwargs)]
-        output.append(render_to_string("interview/select_or_create_source.html"))
-        return mark_safe("\n".join(output))
+        parent_html = super().render(*args, **kwargs)
+        button_html = render_to_string("interview/select_or_create_source.html")
+        return format_html("{}\n{}", parent_html, button_html)
 
 
 class SelectOrCreateOffer(ModelSelect2Widget):
@@ -73,9 +73,9 @@ class SelectOrCreateOffer(ModelSelect2Widget):
     search_fields = ["name__icontains", "subsidiary__name__icontains"]
 
     def render(self, *args, **kwargs):
-        output = [super().render(*args, **kwargs)]
-        output.append(render_to_string("interview/select_or_create_offer.html"))
-        return mark_safe("\n".join(output))
+        parent_html = super().render(*args, **kwargs)
+        button_html = render_to_string("interview/select_or_create_offer.html")
+        return format_html("{}\n{}", parent_html, button_html)
 
 
 class ProcessForm(forms.ModelForm):
