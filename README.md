@@ -51,6 +51,12 @@ source .venv/bin/activate
 # set environment to dev, will load settings in pyoupyou/settings/dev.py
 export PYOUPYOU_ENV=dev
 
+# Generate and set a secret key for Django (REQUIRED)
+# Generate one using Django extensions:
+export SECRET_KEY=$(python manage.py generate_secret_key)
+# Or set your own:
+# export SECRET_KEY="your-generated-secret-key-here"
+
 # Migrate Database, create schema ....
 python manage.py migrate
 
@@ -66,6 +72,14 @@ python manage.py runserver
 ```
 
 # Setup prod
+
+## Set up environment variables
+
+Set the required environment variables:
+- `PYOUPYOU_ENV=prod` 
+- `SECRET_KEY` - Generate using `python manage.py generate_secret_key`
+
+You can use a `.env` file (see `.env.example`) or set them directly in your environment.
 
 ## Create local settings file
 
