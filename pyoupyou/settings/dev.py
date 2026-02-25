@@ -1,9 +1,15 @@
 from pyoupyou.settings.common import *
+import os
 
 DEBUG = True
 
-# Value used for local dev environment for security reason never use it in prod...
-SECRET_KEY = "e1*u0nqk5k^j_mirkhetnq%!1+#*op*57cju44n^1tg=67*ij@"
+# SECRET_KEY must be provided via environment variable for security
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    raise ValueError(
+        "SECRET_KEY environment variable must be set. "
+        "For development, generate one using: python manage.py generate_secret_key"
+    )
 
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}}
 

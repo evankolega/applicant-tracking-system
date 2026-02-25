@@ -1,6 +1,7 @@
 # If you are using prod settings you need to fill the following keys
 # ALLOWED_HOSTS = []
-# SECRET_KEY = '' # You can use the following command: generate_secret_key from django extensions
+# For development, set SECRET_KEY environment variable instead of hardcoding it here
+# You can generate one using: python manage.py generate_secret_key
 
 # SITE_HOST = 'https://pyoupyou.com'
 # MAIL_HR = 'hr@company.com'
