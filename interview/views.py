@@ -489,6 +489,12 @@ def processes(request):
     ]
 )
 def reuse_candidate(request, candidate_id):
+    # Ensure user has permission to access this candidate
+    try:
+        candidate = Candidate.objects.for_user(request.user).get(id=candidate_id)
+    except Candidate.DoesNotExist:
+        return HttpResponseNotFound()
+    
     return new_candidate(request, candidate_id)
 
 
