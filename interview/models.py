@@ -101,7 +101,7 @@ class Candidate(models.Model):
         super(Candidate, self).save(*args, **kwargs)
 
     def __str__(self):
-        return ("{name}").format(name=self.name)
+        return self.display_name
 
     def delete_all_documents(self):
         dirname = f"{self.id}_{slugify(self.name)}"
