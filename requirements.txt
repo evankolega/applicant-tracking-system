@@ -86,7 +86,7 @@ tzdata==2025.1
     #   django
     #   icalendar
     #   pandas
-urllib3==2.3.0
+urllib3==2.5.0
     # via
     #   pyoupyou
     #   requests
