@@ -54,3 +54,4 @@ SEEKUBE_SOURCE_ID = 5
 SECRET_ANON_SALT = "dev-salt"
 
 FORM_WEB_HOOK_PREFIX = "dev"
+FORM_WEB_HOOK_SECRET = "dev-webhook-secret"
