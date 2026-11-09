@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import calendar
+import hmac
 import io
 from collections import defaultdict
 import json
@@ -1747,9 +1748,30 @@ def interviews_list(request):
     return render(request, "interview/list_interviews.html", context)
 
 
+def _cognito_webhook_has_valid_token(request):
+    secret = getattr(settings, "FORM_WEB_HOOK_SECRET", "")
+    if not secret:
+        return False
+
+    provided_token = (
+        request.query_params.get("token")
+        or request.query_params.get("api_key")
+        or request.headers.get("X-API-Key")
+        or ""
+    )
+    authorization = request.headers.get("Authorization", "")
+    if not provided_token and authorization.startswith("Bearer "):
+        provided_token = authorization[len("Bearer ") :]
+
+    return bool(provided_token) and hmac.compare_digest(provided_token, secret)
+
+
 @csrf_exempt
 @api_view(["POST"])
 def process_from_cognito_form(request, source_id, subsidiary_id):
+    if not request.user.is_authenticated and not _cognito_webhook_has_valid_token(request):
+        return HttpResponse(status=401)
+
     data = request.data
 
     data.update(

@@ -8,3 +8,4 @@
 # SEEKUBE_SOURCE_ID = 5
 # SECRET_ANON_SALT = 'my-salt'
 # FORM_WEB_HOOK_PREFIX = 'very-complicated-string'
+# FORM_WEB_HOOK_SECRET = 'very-complicated-shared-secret'
