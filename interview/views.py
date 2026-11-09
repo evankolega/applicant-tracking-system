@@ -732,11 +732,16 @@ def minute_edit(request, interview_id):
 def delete_document_minute_ajax(request):
     document_id = request.POST.get("document_id")
     try:
-        document = DocumentInterview.objects.get(id=document_id)
-        document.delete()
+        document = DocumentInterview.objects.get(
+            id=document_id, interview__in=Interview.objects.for_user(request.user)
+        )
     except DocumentInterview.DoesNotExist:
-        return JsonResponse({"error": "Not found"})
+        return JsonResponse({"error": "Not found"}, status=404)
 
+    if request.user not in document.interview.interviewers.all():
+        return JsonResponse({"error": "Not found"}, status=404)
+
+    document.delete()
     return JsonResponse({})
 
 
